@@ -1,0 +1,26 @@
+name: Build Solana Program
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build Anchor program
+      uses: coral-xyz/anchor-build-action@v0
+      with:
+        node-version: '18'
+        rust-version: 'stable'
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: program-so
+        path: target/deploy/*.so
