@@ -3,8 +3,6 @@ name: Build Solana Program
 on:
   push:
     branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
 
 jobs:
   build:
@@ -18,7 +16,6 @@ jobs:
       uses: actions-rust-lang/setup-rust-toolchain@v1
       with:
         toolchain: stable
-        components: rustfmt, clippy
         
     - name: Install Solana
       run: |
@@ -30,12 +27,3 @@ jobs:
       
     - name: Build program
       run: anchor build
-      
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: solana-program
-        path: |
-          target/**/*.so
-          target/idl/**/*
-        retention-days: 30
